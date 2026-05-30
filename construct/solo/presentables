@@ -1,0 +1,15 @@
+in general, you can compare any metric to a looser version of itself
+its a fair comparison because you expect the constraint to be a helping hand
+which it honestly is when you look at the data in detail
+so when you compare on a large-scale via simple metrics
+you can visualize the robustness of your process
+
+examples to present:
+
+consistency of ms1 distribution distances, and their eventual numerical inconsistency
+
+visualization of the entropy of each ms2 spectra of a distribution + whatever overlaps it has
+
+charge states of distributions
+
+incorrect thermo charge determinations

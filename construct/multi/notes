@@ -1,0 +1,60 @@
+importables:
+elementalcomponents -> has components of elements and amino acids
+generalfunctions -> has several functions used across various parts of the workflow
+sequencetools -> has protein sequence handling functions
+
+overhead:
+execution -> organizes files, converts to mzML, and runs the main script
+main -> executes data processing
+
+database preparation:
+isotopelibrary -> generate isotopic distributions, and some subisotopomer calculations
+
+~
+Improvements to this file:
+ - explain how the data from each called function is organized for it to be used later
+ - given an origin/destination of each saved variable
+
+~
+data processing: in order of their calling
+
+linemodel: implemented, core
+ - sorts signals into useable groups, links ms2 hits to groups on the fly
+ - makes signal data indexable to be used for the rest of the processing
+
+distributionassembly: implemented, core
+ - takes the information accumulated via linemodel and groups line signals into isotopic distributions
+ - ranks potential distributions and discerns the best possible ones
+
+chargehandling: implemented, core
+ - finalizes distributions from the previous file, organizes and saves them
+ - looks for matching charge-states across the prior determined isotopic distributions, outputs the accumulated information
+
+scanmatching: core
+ - matching lines to scans and vice versa
+ - estimating intensity proportions across all ms1 lines withinin an ms2 window, and their charges
+ - consolidating analytes found from distributionmatchpairing into:
+    > linesofscans, scansoflines, scansbyanalyte, spectrabysampling, scanwindowbounds, analytefragmentbounds, and so on
+
+distributionmatching: core
+ - this is matching library-generated ms1 distributions to any and all found ms1 distributions
+ - outputs matching formulas of library distributions, and the position within the library distribution relative to each matched line
+
+differencemining: experimental, not yet implemented
+ - looking for common distribution distances of matched to non-matched [major masses (high points) of] ms1 distributions
+
+subformulalinegrouping: core
+ - reducing complexity of the ms2 search space by tracking redundant fragment probability distributions
+ - grouping subformulas, sequences, and carbon composition of matched lines for final fragment matching
+
+fragmentdeconvolution: core
+ - deconvoluting charges from every ms2 scan
+
+groupfragmentation: core
+ - generating fragment distributions from the groups in subformulalinegrouping and searching them across deconvoluted ms2 spectra
+
+fragmentfileorganizing: core
+ - minor processing of the groupfragmentation output
+
+entropy -> break clustering
+the break clusters will provide a second layer of entropy via pattern recongition
